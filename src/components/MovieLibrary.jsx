@@ -10,13 +10,15 @@ class MovieLibrary extends Component {
   }
 
   render() {
+    const { movies } = this.props;
     return (
         
       <div>
         <h2> My awesome movie library </h2>
         <SearchBar movies={this.props.movies[0]}/>
+        <br />
         {/* <MovieList movies={this.props.movies} /> */}
-        {/* <AddMovie /> */}
+        <AddMovie onClick/>
       </div>
     );
   }
