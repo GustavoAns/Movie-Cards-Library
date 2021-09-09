@@ -5,9 +5,9 @@ class SearchBar extends Component {
     super(props);
 
     this.state = {
-      searchText: '',
-      bookmarkedOnly:false,
-      selectedGenre: '',
+      searchText: this.props.searchText,
+      bookmarkedOnly:this.props.bookmarkedOnly,
+      selectedGenre: this.props.selectedGenre,
     };
 
     this.onSearchTextChange = this.onSearchTextChange.bind(this);
@@ -15,37 +15,40 @@ class SearchBar extends Component {
     this.onSelectedGenreChange = this.onSelectedGenreChange.bind(this);
   }
 
-  onSearchTextChange(event) {
+  async onSearchTextChange(event) {
     const { name , value } = event.target;
 
     this.setState({
       [name]: value
     });
+
+    await this.props.changeState(event.target)
   }
 
-  onBookmarkedChange(event) {
+  async onBookmarkedChange(event) {
     const { name , checked } = event.target;
 
     this.setState({
       [name]: checked
     });
+
+    await this.props.changeState(event.target)
   }
 
-  onSelectedGenreChange(event) {
+  async onSelectedGenreChange(event) {
     const { name , value } = event.target;
 
     this.setState({
       [name]: value
     });
+
+    await this.props.changeState(event.target)
   }
 
   render() {
     // console.log(this.props)
     const { searchText, bookmarkedOnly, selectedGenre } = this.state;
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'teste', label: 'Teste' }
-    ]
+    const { onSearchTextChange } = this
     return (
       <form data-testid="search-bar-form">
         <label data-testid="text-input-label" htmlFor="searchText">
@@ -56,7 +59,7 @@ class SearchBar extends Component {
           type="text"
           name="searchText"
           id="searchText"
-          onChange={ this.onSearchTextChange }
+          onChange={ onSearchTextChange }
           />
         </label>
         <label data-testid="checkbox-input-label" htmlFor="bookmarkedOnly">

@@ -24,7 +24,7 @@ class AddMovie extends Component {
     });
   }
 
-  submit(event) {
+  async submit(event) {
     event.preventDefault();
     const { onClick } = this.props
     onClick(this.state);

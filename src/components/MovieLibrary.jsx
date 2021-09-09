@@ -13,6 +13,22 @@ class MovieLibrary extends Component {
       selectedGenre: '',
       movies: this.props.movies,
     }
+    this.changeState = this.changeState.bind(this);
+    this.addMovie = this.addMovie.bind(this);
+  }
+
+  //Talvez ->
+  changeState(teste) {
+    const { name } = teste
+    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  addMovie() {
+
   }
 
   render() {
@@ -21,10 +37,19 @@ class MovieLibrary extends Component {
         
       <div>
         <h2> My awesome movie library </h2>
-        <SearchBar movies={this.props.movies[0]}/>
-        <br />
-        {/* <MovieList movies={this.props.movies} /> */}
-        <AddMovie onClick/>
+        <SearchBar 
+        movies={this.props.movies}
+        searchText={this.state.searchText}
+        bookmarkedOnly={this.state.bookmarkedOnly}
+        selectedGenre={this.state.selectedGenre}
+        changeState={this.changeState}
+        />
+        <MovieList movies={movies}
+        searchText={this.state.searchText}
+        bookmarkedOnly={this.state.bookmarkedOnly}
+        selectedGenre={this.state.selectedGenre}
+        />
+        <AddMovie onClick={this.addMovie}/>
       </div>
     );
   }
