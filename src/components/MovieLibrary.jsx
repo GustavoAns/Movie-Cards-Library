@@ -47,8 +47,27 @@ class MovieLibrary extends Component {
     });
   }
 
-  addMovie() {
+  addMovie(event) {
+    const {subtitle, title, imagePath, storyline, rating, genre} = event
+    const teste = this.props.movies
+    const Obj = {
+      title: title,
+      subtitle: subtitle,
+      storyline: storyline,
+      rating: rating,
+      imagePath: imagePath,
+      bookmarked: true,
+      genre: genre,
+    }
 
+    teste.push(Obj)
+
+    this.setState ({
+      movies: teste,
+    });
+    console.log(teste)
+
+    // this.props.addcard(event)
   }
 
   render() {
@@ -71,7 +90,10 @@ class MovieLibrary extends Component {
         bookmarkedOnly={this.state.bookmarkedOnly}
         selectedGenre={this.state.selectedGenre}
         />
-        <AddMovie onClick={this.addMovie}/>
+        <AddMovie
+        addMovie={this.addMovie}
+        onClick={this.addMovie}
+        />
       </div>
     );
   }

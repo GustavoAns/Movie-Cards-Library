@@ -28,7 +28,8 @@ class AddMovie extends Component {
     event.preventDefault();
     const { onClick } = this.props
     onClick(this.state);
-    this.setState ({
+    await this.props.addMovie(event)
+    await this.setState ({
       subtitle: '',
       title: '',
       imagePath: '',
