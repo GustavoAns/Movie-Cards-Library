@@ -54,16 +54,14 @@ class MovieLibrary extends Component {
       title: title,
       subtitle: subtitle,
       storyline: storyline,
-      rating: rating,
+      rating: Number(rating),
       imagePath: imagePath,
       bookmarked: true,
       genre: genre,
     }
 
-    teste.push(Obj)
-
     this.setState ({
-      movies: teste,
+      movies: [...teste, Obj],
     });
     console.log(teste)
 
@@ -77,7 +75,7 @@ class MovieLibrary extends Component {
       <div>
         <h2> My awesome movie library </h2>
         <SearchBar 
-        movies={this.props.movies}
+        movies={movies}
         searchText={this.state.searchText}
         bookmarkedOnly={this.state.bookmarkedOnly}
         selectedGenre={this.state.selectedGenre}
@@ -85,7 +83,7 @@ class MovieLibrary extends Component {
         onBookmarkedChange={this.onBookmarkedChange}
         onSelectedGenreChange={this.onSelectedGenreChange}
         />
-        <MovieList movies={movies}
+        <MovieList movies={this.state.movies}
         searchText={this.state.searchText}
         bookmarkedOnly={this.state.bookmarkedOnly}
         selectedGenre={this.state.selectedGenre}

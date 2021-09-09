@@ -24,12 +24,11 @@ class AddMovie extends Component {
     });
   }
 
-  async submit(event) {
+  submit(event) {
     event.preventDefault();
     const { onClick } = this.props
     onClick(this.state);
-    await this.props.addMovie(event)
-    await this.setState ({
+    this.setState ({
       subtitle: '',
       title: '',
       imagePath: '',
@@ -112,6 +111,7 @@ class AddMovie extends Component {
           </select>
         </label>
         <button
+        type='submit'
         data-testid="send-button"
         onClick={this.submit}
         >
