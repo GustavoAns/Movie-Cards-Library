@@ -13,12 +13,32 @@ class MovieLibrary extends Component {
       selectedGenre: '',
       movies: this.props.movies,
     }
-    this.changeState = this.changeState.bind(this);
+    this.onSearchTextChange = this.onSearchTextChange.bind(this);
+    this.onBookmarkedChange = this.onBookmarkedChange.bind(this);
+    this.onSelectedGenreChange = this.onSelectedGenreChange.bind(this);
     this.addMovie = this.addMovie.bind(this);
   }
 
   //Talvez ->
-  changeState(teste) {
+  onSearchTextChange(teste) {
+    const { name } = teste
+    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  onBookmarkedChange(teste) {
+    const { name } = teste
+    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  onSelectedGenreChange(teste) {
     const { name } = teste
     const value = teste.type === 'checkbox' ? teste.checked : teste.value
 
@@ -42,7 +62,9 @@ class MovieLibrary extends Component {
         searchText={this.state.searchText}
         bookmarkedOnly={this.state.bookmarkedOnly}
         selectedGenre={this.state.selectedGenre}
-        changeState={this.changeState}
+        onSearchTextChange={this.onSearchTextChange}
+        onBookmarkedChange={this.onBookmarkedChange}
+        onSelectedGenreChange={this.onSelectedGenreChange}
         />
         <MovieList movies={movies}
         searchText={this.state.searchText}

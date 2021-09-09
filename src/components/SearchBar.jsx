@@ -10,19 +10,19 @@ class SearchBar extends Component {
       selectedGenre: this.props.selectedGenre,
     };
 
-    this.onSearchTextChange = this.onSearchTextChange.bind(this);
+    this.onSearchTextChangeTriger = this.onSearchTextChangeTriger.bind(this);
     this.onBookmarkedChange = this.onBookmarkedChange.bind(this);
     this.onSelectedGenreChange = this.onSelectedGenreChange.bind(this);
   }
 
-  async onSearchTextChange(event) {
+  async onSearchTextChangeTriger(event) {
     const { name , value } = event.target;
 
     this.setState({
       [name]: value
     });
 
-    await this.props.changeState(event.target)
+    await this.props.onSearchTextChange(event.target)
   }
 
   async onBookmarkedChange(event) {
@@ -32,7 +32,7 @@ class SearchBar extends Component {
       [name]: checked
     });
 
-    await this.props.changeState(event.target)
+    await this.props.onBookmarkedChange(event.target)
   }
 
   async onSelectedGenreChange(event) {
@@ -42,13 +42,13 @@ class SearchBar extends Component {
       [name]: value
     });
 
-    await this.props.changeState(event.target)
+    await this.props.onSelectedGenreChange(event.target)
   }
 
   render() {
     // console.log(this.props)
     const { searchText, bookmarkedOnly, selectedGenre } = this.state;
-    const { onSearchTextChange } = this
+    const { onSearchTextChange, onSearchTextChangeTriger } = this
     return (
       <form data-testid="search-bar-form">
         <label data-testid="text-input-label" htmlFor="searchText">
@@ -59,7 +59,7 @@ class SearchBar extends Component {
           type="text"
           name="searchText"
           id="searchText"
-          onChange={ onSearchTextChange }
+          onChange={ onSearchTextChangeTriger }
           />
         </label>
         <label data-testid="checkbox-input-label" htmlFor="bookmarkedOnly">
