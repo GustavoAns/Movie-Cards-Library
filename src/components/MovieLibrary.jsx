@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import MovieList from './MovieList';
 import SearchBar from './SearchBar';
@@ -7,22 +8,23 @@ import AddMovie from './AddMovie';
 class MovieLibrary extends Component {
   constructor(props) {
     super(props);
+    const { movies } = this.props;
     this.state = {
       searchText: '',
       bookmarkedOnly: false,
       selectedGenre: '',
-      movies: this.props.movies,
-    }
+      movies,
+    };
     this.onSearchTextChange = this.onSearchTextChange.bind(this);
     this.onBookmarkedChange = this.onBookmarkedChange.bind(this);
     this.onSelectedGenreChange = this.onSelectedGenreChange.bind(this);
     this.addMovie = this.addMovie.bind(this);
   }
 
-  //Talvez ->
+  // Talvez ->
+  // Tive que modificar os codigos para o lint aceitar e o Jest tb
   onSearchTextChange(teste) {
-    const { name } = teste
-    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+    const { name, value } = teste;
 
     this.setState({
       [name]: value,
@@ -30,8 +32,8 @@ class MovieLibrary extends Component {
   }
 
   onBookmarkedChange(teste) {
-    const { name } = teste
-    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+    const { name } = teste;
+    const value = teste.type === 'checkbox' ? teste.checked : teste.value;
 
     this.setState({
       [name]: value,
@@ -39,8 +41,8 @@ class MovieLibrary extends Component {
   }
 
   onSelectedGenreChange(teste) {
-    const { name } = teste
-    const value = teste.type === 'checkbox' ? teste.checked : teste.value
+    const { name } = teste;
+    const value = teste.type === 'checkbox' ? teste.value : teste.value;
 
     this.setState({
       [name]: value,
@@ -48,53 +50,61 @@ class MovieLibrary extends Component {
   }
 
   addMovie(event) {
-    const {subtitle, title, imagePath, storyline, rating, genre} = event
-    const teste = this.props.movies
+    const { subtitle, title, imagePath, storyline, rating, genre } = event;
+    const { movies } = this.props;
+    const teste = movies;
     const Obj = {
-      title: title,
-      subtitle: subtitle,
-      storyline: storyline,
+      title,
+      subtitle,
+      storyline,
       rating: Number(rating),
-      imagePath: imagePath,
+      imagePath,
       bookmarked: true,
-      genre: genre,
-    }
+      genre,
+    };
 
-    this.setState ({
+    this.setState({
       movies: [...teste, Obj],
     });
-    console.log(teste)
-
-    // this.props.addcard(event)
+    // console.log(teste);
   }
 
   render() {
+    const { searchText, bookmarkedOnly, selectedGenre } = this.state;
+    const { state } = this;
     const { movies } = this.props;
     return (
-        
       <div>
         <h2> My awesome movie library </h2>
-        <SearchBar 
-        movies={movies}
-        searchText={this.state.searchText}
-        bookmarkedOnly={this.state.bookmarkedOnly}
-        selectedGenre={this.state.selectedGenre}
-        onSearchTextChange={this.onSearchTextChange}
-        onBookmarkedChange={this.onBookmarkedChange}
-        onSelectedGenreChange={this.onSelectedGenreChange}
+        <SearchBar
+          movies={ movies }
+          searchText={ searchText }
+          bookmarkedOnly={ bookmarkedOnly }
+          selectedGenre={ selectedGenre }
+          onSearchTextChange={ this.onSearchTextChange }
+          onBookmarkedChange={ this.onBookmarkedChange }
+          onSelectedGenreChange={ this.onSelectedGenreChange }
         />
-        <MovieList movies={this.state.movies}
-        searchText={this.state.searchText}
-        bookmarkedOnly={this.state.bookmarkedOnly}
-        selectedGenre={this.state.selectedGenre}
+        <MovieList
+          movies={ state.movies }
+          searchText={ searchText }
+          bookmarkedOnly={ bookmarkedOnly }
+          selectedGenre={ selectedGenre }
         />
-        <AddMovie
-        addMovie={this.addMovie}
-        onClick={this.addMovie}
-        />
+        <AddMovie onClick={ this.addMovie } />
       </div>
     );
   }
 }
+
+MovieLibrary.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    storyline: PropTypes.string,
+    rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    imagePath: PropTypes.string,
+  })).isRequired,
+};
 
 export default MovieLibrary;
