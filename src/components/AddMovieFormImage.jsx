@@ -20,4 +20,9 @@ class AddMovieFormImage extends React.Component {
   }
 }
 
+AddMovieFormImage.propTypes = {
+  imagePath: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
 export default AddMovieFormImage;

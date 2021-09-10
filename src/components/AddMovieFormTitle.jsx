@@ -20,4 +20,9 @@ class AddMovieFormTitle extends React.Component {
   }
 }
 
+AddMovieFormTitle.propTypes = {
+  title: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
 export default AddMovieFormTitle;

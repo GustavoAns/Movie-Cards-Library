@@ -23,4 +23,9 @@ class AddMovieFormGenre extends React.Component {
   }
 }
 
+AddMovieFormGenre.propTypes = {
+  genre: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
 export default AddMovieFormGenre;

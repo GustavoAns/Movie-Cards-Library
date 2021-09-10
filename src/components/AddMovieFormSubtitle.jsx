@@ -20,4 +20,9 @@ class AddMovieFormSubtitle extends React.Component {
   }
 }
 
+AddMovieFormSubtitle.propTypes = {
+  subtitle: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
 export default AddMovieFormSubtitle;

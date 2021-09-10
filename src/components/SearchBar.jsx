@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
+    const { searchText, bookmarkedOnly, selectedGenre } = this.props;
+
     this.state = {
-      searchText: this.props.searchText,
-      bookmarkedOnly: this.props.bookmarkedOnly,
-      selectedGenre: this.props.selectedGenre,
+      searchText,
+      bookmarkedOnly,
+      selectedGenre,
     };
 
     this.onSearchTextChangeTriger = this.onSearchTextChangeTriger.bind(this);
@@ -15,40 +18,42 @@ class SearchBar extends Component {
     this.onSelectedGenreChange = this.onSelectedGenreChange.bind(this);
   }
 
-  async onSearchTextChangeTriger(event) {
+  onSearchTextChangeTriger(event) {
     const { name, value } = event.target;
+    const { onSearchTextChange } = this.props;
 
     this.setState({
       [name]: value,
     });
 
-    await this.props.onSearchTextChange(event.target);
+    onSearchTextChange(event.target);
   }
 
-  async onBookmarkedChange(event) {
+  onBookmarkedChange(event) {
     const { name, checked } = event.target;
+    const { onBookmarkedChange } = this.props;
 
     this.setState({
       [name]: checked,
     });
 
-    await this.props.onBookmarkedChange(event.target);
+    onBookmarkedChange(event.target);
   }
 
-  async onSelectedGenreChange(event) {
+  onSelectedGenreChange(event) {
     const { name, value } = event.target;
+    const { onSelectedGenreChange } = this.props;
 
     this.setState({
       [name]: value,
     });
 
-    await this.props.onSelectedGenreChange(event.target);
+    onSelectedGenreChange(event.target);
   }
 
   render() {
-    // console.log(this.props)
     const { searchText, bookmarkedOnly, selectedGenre } = this.state;
-    const { onSearchTextChange, onSearchTextChangeTriger } = this;
+    const { onSearchTextChangeTriger } = this;
     return (
       <form data-testid="search-bar-form">
         <label data-testid="text-input-label" htmlFor="searchText">
@@ -82,23 +87,24 @@ class SearchBar extends Component {
             id="selectedGenre"
             onChange={ this.onSelectedGenreChange }
           >
-            <option value="" data-testid="select-option">
-              Todos
-            </option>
-            <option value="action" data-testid="select-option">
-              Ação
-            </option>
-            <option value="comedy" data-testid="select-option">
-              Comédia
-            </option>
-            <option value="thriller" data-testid="select-option">
-              Suspense
-            </option>
+            <option value="" data-testid="select-option">Todos</option>
+            <option value="action" data-testid="select-option">Ação</option>
+            <option value="comedy" data-testid="select-option">Comédia</option>
+            <option value="thriller" data-testid="select-option">Suspense</option>
           </select>
         </label>
       </form>
     );
   }
 }
+
+SearchBar.propTypes = {
+  searchText: PropTypes.string.isRequired,
+  bookmarkedOnly: PropTypes.bool.isRequired,
+  selectedGenre: PropTypes.string.isRequired,
+  onSearchTextChange: PropTypes.func.isRequired,
+  onBookmarkedChange: PropTypes.func.isRequired,
+  onSelectedGenreChange: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

@@ -70,14 +70,23 @@ class MovieLibrary extends Component {
   }
 
   render() {
-    const { searchText, bookmarkedOnly, selectedGenre } = this.state;
-    const { state } = this;
-    const { movies } = this.props;
+    const { searchText, bookmarkedOnly, selectedGenre, movies } = this.state;
+    const { props } = this;
+    const novoMovies = movies.filter((movie) => (bookmarkedOnly
+      ? movie.bookmarked : movie.title));
+    const novoMovies1 = novoMovies
+      .filter(({ genre }) => genre.includes(selectedGenre))
+      .filter(({ title, subtitle, storyline }) => (
+        title.toLowerCase().includes(searchText.toLowerCase())
+        || storyline.toLowerCase().includes(searchText.toLowerCase())
+        || subtitle.toLowerCase().includes(searchText.toLowerCase())
+      ));
+
     return (
       <div>
         <h2> My awesome movie library </h2>
         <SearchBar
-          movies={ movies }
+          movies={ props.movies }
           searchText={ searchText }
           bookmarkedOnly={ bookmarkedOnly }
           selectedGenre={ selectedGenre }
@@ -86,7 +95,7 @@ class MovieLibrary extends Component {
           onSelectedGenreChange={ this.onSelectedGenreChange }
         />
         <MovieList
-          movies={ state.movies }
+          movies={ novoMovies1 }
           searchText={ searchText }
           bookmarkedOnly={ bookmarkedOnly }
           selectedGenre={ selectedGenre }
